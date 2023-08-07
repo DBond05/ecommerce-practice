@@ -1,0 +1,21 @@
+<table class="table">
+    <thead class="table-info">
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Units</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ngFor = Angular HTML loop syntax
+ loops through product array  -->
+        <tr *ngFor="let tempProduct of products">
+            <td class="align-middle"><img src="{{tempProduct.imageUrl}}" height="50" /></td>
+            <td class="align-left">{{tempProduct.name}}</td>
+            <td class="align-middle">{{tempProduct.unitPrice|currency:'USD'}}</td>
+            <td class="align-middle">{{tempProduct.unitsInStock}}</td>
+        </tr>
+    </tbody>
+
+</table>
