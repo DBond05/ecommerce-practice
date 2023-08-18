@@ -189,9 +189,11 @@ export class CheckoutComponent implements OnInit {
     //set up purchase
     let purchase = new Purchase();
 
-    //populate purchase with customer, Addresses, order and order Items
+    //populate purchase with:
+    // customer, 
       purchase.customer = this.checkoutFormGroup.controls['customer'].value;
 
+    // Addresses,
       purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
       const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
       const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
@@ -204,14 +206,16 @@ export class CheckoutComponent implements OnInit {
       purchase.billingAddress.state = billingState.name;
       purchase.billingAddress.country = billingCountry.name;
 
+     // order and order Items
       purchase.order = order;
       purchase.orderItems = orderItems;
+
 
     // call REST API via the checkout service
     this.checkoutService.placeOrder(purchase).subscribe(
       {
         next: response => {
-          alert(`Your alert has been recieved. \n Tracking number: ${response.orderTrackingNumber}`);
+          alert(`Your order has been recieved. \n Tracking number: ${response.orderTrackingNumber}`);
           // reset cart
           this.resetCart();
         },
