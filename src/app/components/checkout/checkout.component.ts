@@ -28,6 +28,8 @@ export class CheckoutComponent implements OnInit {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
+  storage: Storage= sessionStorage;
+
   constructor(private formBuilder: FormBuilder,
     private formService: CheckoutFormService,
     private cartService: CartService,
@@ -40,7 +42,8 @@ export class CheckoutComponent implements OnInit {
 
     this.reviewCartDetails();
 
-
+    //read email from browser storage
+    const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
     // validation
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -50,7 +53,7 @@ export class CheckoutComponent implements OnInit {
         lastName: new FormControl('', [Validators.required,
         Validators.minLength(2),
         FormValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required,
+        email: new FormControl(theEmail, [Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9._]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group(
@@ -176,15 +179,13 @@ export class CheckoutComponent implements OnInit {
       return;
     }
     //setup order
-    let order = new Order();
-    order.totalPrice - this.totalPrice;
-    order.totalQuantity = this.totalQuantity;
+    let order = new Order(this.totalQuantity, this.totalPrice);
 
     // get cart items
     const cartItems = this.cartService.cartItems;
 
     //create Order Items from cartItems
-    let orderItems: OrderItem[] = cartItems.map(temp => new OrderItem(temp));
+    let orderItems: OrderItem[] = cartItems.map(temp => new OrderItem(temp.imageUrl!, temp.unitPrice!, temp.quantity,temp.id!));
 
     //set up purchase
     let purchase = new Purchase();

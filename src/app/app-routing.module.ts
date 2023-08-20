@@ -8,6 +8,7 @@ import {OktaAuthModule, OktaCallbackComponent, OKTA_CONFIG, OktaAuthGuard} from 
 import { LoginComponent } from './components/login/login.component';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { OktaAuth } from '@okta/okta-auth-js';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 
 
@@ -29,6 +30,8 @@ const routes: Routes = [
   {path: 'products', component: ProductListComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard],
+                                                data: {onAuthRequired: sendToLoginPage}},
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard],
                                                 data: {onAuthRequired: sendToLoginPage}},
   {path: '', redirectTo: '/products', pathMatch:'full'},
   {path: '**', redirectTo: '/products', pathMatch:'full'}
