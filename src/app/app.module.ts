@@ -13,7 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
@@ -22,6 +22,7 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -39,7 +40,8 @@ const oktaAuth = new OktaAuth(oktaConfig);
     LoginComponent,
     LoginStatusComponent,
     MembersPageComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ const oktaAuth = new OktaAuth(oktaConfig);
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    OktaAuthModule
+    OktaAuthModule, 
+    FormsModule
   ],
   providers: [ProductService, {provide: OKTA_CONFIG, useValue: {oktaAuth}},
                               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
